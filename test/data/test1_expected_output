@@ -1,0 +1,63 @@
+# headline
+
+<!-- #toc -->
+## Table of Contents
+
+[**one**](#one)
+
+[**two**](#two)
+
+[**three**](#three)
+<!-- // end of #toc -->
+
+## one
+<!-- #code files/one.dart -->
+```dart
+void main(List<String> args) {
+  print('Hello, this is one.');
+}
+```
+<!-- // end of #code -->
+
+## two
+<!-- #code files/two.dart -->
+```dart
+String interestingMethod() {
+  return 'Foo';
+}
+```
+<!-- // end of #code -->
+
+## three
+<!-- #code files/three.dart -->
+```dart
+class MyClass {
+  ...
+
+  String interestingMethod() {
+    return 'Foo';
+  }
+}
+```
+<!-- // end of #code -->
+
+<!-- #include test1_extended -->
+Extended
+
+```dart
+void main(List<String> args) {}
+```
+<!-- // end of #include -->
+
+a
+<!-- #space 3 -->
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+<!-- // end of #space -->
+b
+
+end.
