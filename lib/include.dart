@@ -36,7 +36,8 @@ List<String> _readIncludeFile(File includeFile) {
 
   // Remove any macros
   lines = lines
-      .where((line) => !line.isAnyMacro() && !line.isAnyMacroEnd())
+      .where((line) =>
+          !line.isAnyMacro() && !line.isAnyMacroEnd() && line != usageHint)
       .toList();
 
   return lines;
