@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:readme_helper/include.dart';
-import 'package:readme_helper/macros.dart';
+import 'package:readme_helper/code_utils.dart';
 import 'package:readme_helper/toc.dart';
 
 import 'code.dart';

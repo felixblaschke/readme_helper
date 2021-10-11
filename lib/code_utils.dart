@@ -1,6 +1,21 @@
 import 'lines.dart';
 
-extension MacroExtension on String {
+extension LinesReader on List<String> {
+  void read(void Function(String line, bool skip) readFn) {
+    var skip = false;
+
+    for (var line in this) {
+      if (line.isEmbeddedCode) {
+        skip = !skip;
+      }
+      readFn(line, skip);
+    }
+  }
+}
+
+extension CodeExtension on String {
+  bool get isEmbeddedCode => trim().startsWith('```');
+
   bool isMacro(String command) {
     var line = trim().toLowerCase();
     return line.startsWith('<!-- #$command ') && line.endsWith('-->');

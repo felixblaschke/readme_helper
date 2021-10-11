@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:readme_helper/macros.dart';
+import 'package:readme_helper/code_utils.dart';
 
 import 'lines.dart';
 
@@ -16,10 +16,10 @@ String applySpaceMacro(File file, String content) {
 List<String> _generateCodeBlocks(File file, List<String> lines) {
   var result = Lines();
 
-  for (var line in lines) {
+  lines.read((line, skip) {
     result.add(line);
 
-    if (line.isMacro('space')) {
+    if (!skip && line.isMacro('space')) {
       var space = int.tryParse(line.macroContent.split(' ')[1]) ?? 1;
       for (var i = 0; i < space; i++) {
         result.add('');
@@ -27,7 +27,7 @@ List<String> _generateCodeBlocks(File file, List<String> lines) {
       }
       result.add(_endComment);
     }
-  }
+  });
   return result.data();
 }
 

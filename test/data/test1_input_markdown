@@ -21,4 +21,12 @@ a
 <!-- #space 3 -->
 b
 
+```md
+compiler should not touch this:
+<!-- #code test1_extended -->
+<!-- #include test1_extended -->
+<!-- #space 2 -->
+<!-- #toc -->
+```
+
 end.

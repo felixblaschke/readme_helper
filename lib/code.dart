@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:readme_helper/macros.dart';
+import 'package:readme_helper/code_utils.dart';
 
 import 'lines.dart';
 
@@ -16,10 +16,10 @@ String applyCodeMacro(File file, String content) {
 List<String> _generateCodeBlocks(File file, List<String> lines) {
   var result = Lines();
 
-  for (var line in lines) {
+  lines.read((line, skip) {
     result.add(line);
 
-    if (line.isMacro('code')) {
+    if (!skip && line.isMacro('code')) {
       var path = line.macroContent.split(' ')[1];
       var codeFile = File('${file.parent.path}/$path');
       if (codeFile.existsSync()) {
@@ -31,7 +31,7 @@ List<String> _generateCodeBlocks(File file, List<String> lines) {
         throw 'Error in ${file.path}: Code reference ${codeFile.path} not found';
       }
     }
-  }
+  });
   return result.data();
 }
 

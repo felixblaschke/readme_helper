@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:readme_helper/macros.dart';
+import 'package:readme_helper/code_utils.dart';
 
 import 'lines.dart';
 
@@ -12,10 +12,10 @@ String applyTocMacro(File file, String content) {
 
   var toc = _extractTableOfContents(lines);
 
-  for (var line in lines) {
+  lines.read((line, skip) {
     result.add(line);
 
-    if (line.isMacro("toc")) {
+    if (!skip && line.isMacro("toc")) {
       result.add('## Table of Contents');
       for (var toplevel in toc.subsections) {
         result.add('');
@@ -26,25 +26,24 @@ String applyTocMacro(File file, String content) {
       }
       result.add(_endComment);
     }
-  }
+  });
   return result.data().join('\n');
 }
 
 Section _extractTableOfContents(List<String> lines) {
   var toc = Section('toc', '');
 
-  lines
-      .map((line) => line.trim())
-      .where((line) => line.startsWith('##'))
-      .forEach((line) {
-    var depth = line.indexOf(' ');
-    var title = line.substring(depth + 1);
-    var link = '#' + title.toLowerCase().replaceAll(' ', '-');
+  lines.read((line, skip) {
+    if (!skip && line.trim().startsWith('#')) {
+      var depth = line.indexOf(' ');
+      var title = line.substring(depth + 1);
+      var link = '#' + title.toLowerCase().replaceAll(' ', '-');
 
-    if (depth == 2) {
-      toc.add(Section(title, link));
-    } else if (depth == 3) {
-      toc.last.add(Section(title, link));
+      if (depth == 2) {
+        toc.add(Section(title, link));
+      } else if (depth == 3) {
+        toc.last.add(Section(title, link));
+      }
     }
   });
 

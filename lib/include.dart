@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:readme_helper/macros.dart';
+import 'package:readme_helper/code_utils.dart';
 import 'package:readme_helper/process_file.dart';
 
 import 'lines.dart';
@@ -11,10 +11,10 @@ String applyIncludeMacro(File file, String content) {
 
   lines = removeGeneratedBlocks(lines, 'include');
 
-  for (var line in lines) {
+  lines.read((line, skip) {
     result.add(line);
 
-    if (line.isMacro("include")) {
+    if (!skip && line.isMacro("include")) {
       var path = line.macroContent.split(' ')[1];
       var includeFile = File('${file.parent.path}/$path');
       if (includeFile.existsSync()) {
@@ -24,7 +24,7 @@ String applyIncludeMacro(File file, String content) {
         throw 'Error in ${file.path}: File to include ${includeFile.path} not found';
       }
     }
-  }
+  });
   return result.data().join('\n');
 }
 
