@@ -59,6 +59,9 @@ List<String> _readCodeFile(File file) {
     } else if (line.isEnd) {
       break;
     } else if (!skip) {
+      if (line.startsWith('/// ')) {
+        line = line.substring(4, line.length);
+      }
       result.add(line);
     }
   }
