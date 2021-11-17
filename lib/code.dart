@@ -61,6 +61,7 @@ List<String> _readCodeFile(File file) {
     } else if (!skip) {
       if (line.startsWith('/// ')) {
         line = line.substring(4, line.length);
+        if (line.startsWith('{@')) continue;
       }
       result.add(line);
     }
