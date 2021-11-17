@@ -9,6 +9,8 @@ Helpful code generator for the README and other markdown files.
 **1.** Install or update **readme_helper**:
 ```bash
 flutter pub global activate readme_helper
+# or
+readme_helper
 ```
 
 **2.** Start using these "magical" comment commands:
