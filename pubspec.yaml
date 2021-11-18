@@ -1,6 +1,6 @@
 name: readme_helper
 description: Helpful code generator for README.md and other markdown files.
-version: 0.1.3
+version: 0.1.4
 homepage: https://github.com/felixblaschke/readme_helper
 
 environment:
