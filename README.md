@@ -1,5 +1,4 @@
 <!-- This file uses generated code. Visit https://pub.dev/packages/readme_helper for usage information. -->
-<!-- This file uses generated code. Visit https://pub.dev/packages/readme_helper for usage information. -->
 # readme_helper
 
 Helpful code generator for the README and other markdown files.
@@ -9,6 +8,8 @@ Helpful code generator for the README and other markdown files.
 **1.** Install or update **readme_helper**:
 ```bash
 flutter pub global activate readme_helper
+# or
+readme_helper
 ```
 
 **2.** Start using these "magical" comment commands:
@@ -128,6 +129,8 @@ class MyClass {
 }
 ```
 
+> if you use skip outside of closure, it would not add code block.
+
 #### Indentions
 
 By indenting the `// #begin` scope comments, you can hint to remove leading whitespace.
@@ -193,3 +196,26 @@ By default you can't have more then one new line. For esthetics you might want t
 ```
 
 This will generate line breaks with `&nbsp;` characters.
+
+### Ignore command
+```
+Example:
+<!-- #code lib/client_ext.dart ignore:import ignoreComment ignoreSourceDoc -->
+```
+- ignore:key
+  filter `$key` to ignore, you could make key is `import`.
+- ignoreDoc:
+  Ignore startWith('///')
+- ignoreComment:
+  Ignore startWith('// ')
+- ignoreSourceDoc:
+  Ignore something like startWith(' ///')
+- ignoreSource:
+  Ignore Source but not include `ignoreSourceComment` and `ignoreSourceDoc`
+- ignoreSourceComment:
+  Ignore something like startWith(' *// ')
+
+ignoreDoc ignoreComment ignoreSourceDoc ignoreSource ignoreSourceComment
+
+[Example Repository](
+https://github.com/huang12zheng/flutter_utils/tree/master/packages/ferry_utils)
