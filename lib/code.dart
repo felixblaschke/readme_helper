@@ -44,7 +44,10 @@ List<String> _readCodeFile(File file, List<String> args) {
   bool isSource = false;
   List<String> sourceList = [];
   bool isIgnoreDoc = args.contains('ignoreDoc');
+  bool isIgnoreComment = args.contains('ignoreComment');
   bool isIgnoreSourceDoc = args.contains('ignoreSourceDoc');
+  bool isIgnoreSource = args.contains('ignoreSource');
+  bool isIgnoreSourceComment = args.contains('ignoreSourceComment');
 
   for (var line in lines) {
     if (line.isBegin) {
@@ -56,7 +59,13 @@ List<String> _readCodeFile(File file, List<String> args) {
       for (var i = 0; i < lineIndent; i++) {
         whitespace += ' ';
       }
-      result.add('$whitespace...');
+      if (lineIndent > 0) {
+        if (!line.isDocument) {
+          sourceList.add('$whitespace...');
+        } else {
+          result.add('$whitespace...');
+        }
+      }
       skip = true;
     } else if (line.isResume) {
       skip = false;
@@ -65,8 +74,13 @@ List<String> _readCodeFile(File file, List<String> args) {
     } else if (!skip) {
       if (isIgnore(line, args)) continue;
       if (isIgnoreDoc && line.isDocument) continue;
-      if (isIgnoreSourceDoc &&
-          (line.startsWith(' ') && line.trimLeft().isDocument)) continue;
+      if (isIgnoreComment && line.isComment) continue;
+      if (isIgnoreSource &&
+          line.isSource &&
+          !line.isSourceDoc &&
+          !line.isSourceComment) continue;
+      if (isIgnoreSourceDoc && line.isSourceDoc) continue;
+      if (isIgnoreSourceComment && line.isSourceComment) continue;
       if (!line.isDocument) {
         if (isSource == false) {
           isSource = true;
@@ -139,8 +153,12 @@ extension CodeInstructionsExtensions on String {
   bool get isResume => trim() == '// #resume';
 }
 
-extension SourceContendExtensions on String {
+extension ContendExtensions on String {
   bool get isDocument => startsWith('///');
+  bool get isSourceDoc => startsWith(' ') && trimLeft().isDocument;
+  bool get isSource => !isDocument;
+  bool get isSourceComment => trimLeft().startsWith('// ');
+  bool get isComment => startsWith('// ');
 }
 
 extension on File {
