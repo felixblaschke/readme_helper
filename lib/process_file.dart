@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:readme_helper/include.dart';
@@ -26,7 +27,7 @@ String processContent(File file, String content) {
 }
 
 String applyUsageHint(String content) {
-  var lines = content.split('\n');
+  var lines = LineSplitter.split(content).toList();
 
   var contentUsesMacros = lines.any((line) => line.isAnyMacro());
   if (contentUsesMacros && lines.first != usageHint) {

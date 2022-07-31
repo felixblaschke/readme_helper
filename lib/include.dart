@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:readme_helper/code_utils.dart';
@@ -6,7 +7,7 @@ import 'package:readme_helper/process_file.dart';
 import 'lines.dart';
 
 String applyIncludeMacro(File file, String content) {
-  var lines = content.split('\n');
+  var lines = LineSplitter.split(content).toList();
   var result = Lines();
 
   lines = removeGeneratedBlocks(lines, 'include');
@@ -29,10 +30,11 @@ String applyIncludeMacro(File file, String content) {
 }
 
 List<String> _readIncludeFile(File includeFile) {
-  var lines = includeFile.readAsStringSync().split('\n');
+  var lines = LineSplitter.split(includeFile.readAsStringSync()).toList();
 
   // Process included file
-  lines = processContent(includeFile, lines.join('\n')).split('\n');
+  lines = LineSplitter.split(processContent(includeFile, lines.join('\n')))
+      .toList();
 
   // Remove any macros
   lines = lines

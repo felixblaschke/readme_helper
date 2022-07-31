@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:readme_helper/code_utils.dart';
@@ -5,7 +6,7 @@ import 'package:readme_helper/code_utils.dart';
 import 'lines.dart';
 
 String applyCodeMacro(File file, String content) {
-  var lines = content.split('\n');
+  var lines = LineSplitter.split(content).toList();
 
   lines = removeGeneratedBlocks(lines, 'code');
   lines = _generateCodeBlocks(file, lines);
@@ -36,7 +37,7 @@ List<String> _generateCodeBlocks(File file, List<String> lines) {
 }
 
 List<String> _readCodeFile(File file) {
-  var lines = file.readAsStringSync().split('\n');
+  var lines = LineSplitter.split(file.readAsStringSync()).toList();
   var result = Lines();
 
   var indent = 0;

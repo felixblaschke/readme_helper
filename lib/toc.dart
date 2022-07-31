@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:readme_helper/code_utils.dart';
@@ -5,7 +6,7 @@ import 'package:readme_helper/code_utils.dart';
 import 'lines.dart';
 
 String applyTocMacro(File file, String content) {
-  var lines = content.split('\n');
+  var lines = LineSplitter.split(content).toList();
   var result = Lines();
 
   lines = removeGeneratedBlocks(lines, 'toc');
