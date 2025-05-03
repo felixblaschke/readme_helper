@@ -38,7 +38,7 @@ Section _extractTableOfContents(List<String> lines) {
     if (!skip && line.trim().startsWith('#')) {
       var depth = line.indexOf(' ');
       var title = line.substring(depth + 1);
-      var link = '#' + title.toLowerCase().replaceAll(' ', '-');
+      var link = '#${title.toLowerCase().replaceAll(' ', '-')}';
 
       if (depth == 2) {
         toc.add(Section(title, link));
